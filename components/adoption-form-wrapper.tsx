@@ -1,0 +1,23 @@
+"use client"
+
+import { useSearchParams } from "next/navigation"
+import { AdoptionForm } from "./adoption-form"
+
+export function AdoptionFormWrapper() {
+  const searchParams = useSearchParams()
+  const petId = searchParams?.get('petId') ?? null
+  const petName = searchParams?.get('petName') ?? null
+
+  if (!petId || !petName) {
+    return (
+      <div className="text-center">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">Invalid Request</h1>
+        <p className="text-gray-600">
+          Please select a pet to adopt from our available pets page.
+        </p>
+      </div>
+    )
+  }
+
+  return <AdoptionForm petId={petId} petName={petName} />
+} 
