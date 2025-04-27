@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
-import { Button } from "../components/ui/button"
+import { Button } from "@/components/ui/button"
 import { FeaturedPets } from "../components/featured-pets"
 import { AdoptionProcess } from "../components/adoption-process"
 import { Testimonials } from "../components/testimonials"
-import { Newsletter } from "../components/newsletter"
+import { Newsletter } from "@/components/newsletter"
 
 export default function HomePage() {
   return (
@@ -23,6 +23,9 @@ export default function HomePage() {
                 <p className="text-lg md:text-xl mb-8">Adopt, Don't Shop – Give a pet a loving home.</p>
                 <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white">
                   <Link to="/pets">Browse Pets</Link>
+                </Button>
+                <Button asChild size="lg" className="bg-secondary hover:bg-secondary/90 text-white ml-4">
+                  <Link to="/admin/login">Admin Login</Link>
                 </Button>
               </div>
             </div>
