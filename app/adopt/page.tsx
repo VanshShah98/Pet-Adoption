@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { AdoptionFormWrapper } from "@/components/adoption-form-wrapper"
 
 export default function AdoptPage() {
@@ -12,9 +13,10 @@ export default function AdoptPage() {
       </div>
 
       <div className="max-w-3xl mx-auto">
-        <AdoptionFormWrapper />
+        <Suspense fallback={<p className="text-center text-gray-500">Loading form...</p>}>
+          <AdoptionFormWrapper />
+        </Suspense>
       </div>
     </main>
   )
 }
-
