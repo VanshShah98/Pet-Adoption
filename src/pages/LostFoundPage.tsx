@@ -1,6 +1,6 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
-import { LostPetForm } from "../components/lost-pet-form"
-import { LostPetGrid } from "../components/lost-pet-grid"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
+import { LostPetForm } from "../../components/lost-pet-form"
+import { LostPetGrid } from "../../components/lost-pet-grid"
 
 export default function LostFoundPage() {
   return (

@@ -1,4 +1,4 @@
-import { AdoptionForm } from "../components/adoption-form"
+import { AdoptionForm } from "../../components/adoption-form"
 
 export default function AdoptPage() {
   return (
@@ -12,7 +12,7 @@ export default function AdoptPage() {
       </div>
 
       <div className="max-w-3xl mx-auto">
-        <AdoptionForm />
+        <AdoptionForm petId={""} petName={""} />
       </div>
     </main>
   )
