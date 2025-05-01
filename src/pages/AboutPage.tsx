@@ -1,5 +1,5 @@
 import { Button } from "../../components/ui/button"
-import { Link } from "react-router-dom"
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -107,7 +107,7 @@ export default function AboutPage() {
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Button asChild>
-            <Link to="/pets">Adopt a Pet</Link>
+          <Link href="/pets">Adopt a Pet</Link>
           </Button>
           <Button variant="outline">Volunteer</Button>
           <Button variant="secondary">Donate</Button>
