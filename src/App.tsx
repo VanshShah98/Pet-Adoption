@@ -9,7 +9,7 @@ import ContactPage from "./pages/ContactPage"
 import AboutPage from "./pages/AboutPage"
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
-
+import './index.css'; 
 function App() {
   const isAdminLoggedIn = localStorage.getItem('adminLoggedIn');
 

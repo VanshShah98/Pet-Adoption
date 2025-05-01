@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './admin-dashboard.css'; // Import the CSS file
 
 type AdoptionRequest = {
   id: number;
@@ -20,8 +21,12 @@ type Pet = {
 };
 
 const AdminDashboard = () => {
-  const [adoptionRequests, setAdoptionRequests] = useState<AdoptionRequest[]>([]);
-  const [pets, setPets] = useState<Pet[]>([]);
+  const [adoptionRequests, setAdoptionRequests] = useState<AdoptionRequest[]>([
+    { id: 1, userName: 'John Doe', petName: 'Rex', petId: '001', status: 'Pending', date: '2025-04-27' },
+    { id: 2, userName: 'Jane Smith', petName: 'Bella', petId: '002', status: 'Pending', date: '2025-04-25' },
+    { id: 3, userName: 'Alex Green', petName: 'Milo', petId: '003', status: 'Pending', date: '2025-04-23' }
+  ]);
+  const [pets, setPets] = useState<Pet[]>([]); 
   const [newPet, setNewPet] = useState<Pet>({
     id: 0,
     name: '',
@@ -35,22 +40,32 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchAdoptionRequests = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/adoption-requests');
+        const token = localStorage.getItem('adminToken'); // Assuming token is saved here after admin login
+    
+        const response = await fetch('http://localhost:5000/api/adoptions', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // 🔥 Important: Send JWT Token
+          }
+        });
+    
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        const data = await response.json();
-        console.log('Fetched data:', data);
-        if (Array.isArray(data)) {
-          setAdoptionRequests(data);
+    
+        const result = await response.json();
+        console.log('Fetched data:', result);
+    
+        if (Array.isArray(result.data)) {
+          setAdoptionRequests(result.data);
         } else {
-          console.error('Data is not an array:', data);
+          console.error('Data is not an array:', result);
         }
       } catch (error) {
         console.error('Error fetching adoption requests:', error);
       }
     };
-    fetchAdoptionRequests();
   }, []);
 
   const updateRequestStatus = (id: number, newStatus: string) => {
@@ -81,129 +96,118 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="p-8 bg-pink-50 min-h-screen">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-extrabold text-pink-700">Admin Dashboard</h1>
-        <button onClick={handleLogout} className="bg-pink-700 text-white px-5 py-2 rounded-lg shadow-md hover:bg-pink-800 transition duration-300">
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h1>Admin Dashboard</h1>
+        <button onClick={handleLogout} className="logout-button">
           Logout
         </button>
       </div>
 
-      <div className="mb-10">
-        <h2 className="text-3xl mb-6 text-pink-600">Adoption Requests Panel</h2>
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <table className="min-w-full">
-            <thead>
-              <tr className="bg-pink-100">
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">User Name</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Pet Name</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Pet ID</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Status</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Date</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Actions</th>
+      <div className="panel-title">Adoption Requests Panel</div>
+      <div className="bg-white p-6 rounded-lg shadow-lg">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>Pet Name</th>
+              <th>Pet ID</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {adoptionRequests.map((request) => (
+              <tr key={request.id}>
+                <td>{request.userName}</td>
+                <td>{request.petName}</td>
+                <td>{request.petId}</td>
+                <td>{request.status}</td>
+                <td>{request.date}</td>
+                <td>
+                  <button onClick={() => updateRequestStatus(request.id, 'Approved')} className="button button-approve">Approve</button>
+                  <button onClick={() => updateRequestStatus(request.id, 'Rejected')} className="button button-reject">Reject</button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {adoptionRequests.map((request) => (
-                <tr key={request.id} className="hover:bg-pink-50">
-                  <td className="border-t px-6 py-4">{request.userName}</td>
-                  <td className="border-t px-6 py-4">{request.petName}</td>
-                  <td className="border-t px-6 py-4">{request.petId}</td>
-                  <td className="border-t px-6 py-4">{request.status}</td>
-                  <td className="border-t px-6 py-4">{request.date}</td>
-                  <td className="border-t px-6 py-4">
-                    <button onClick={() => updateRequestStatus(request.id, 'Approved')} className="bg-green-500 text-white px-3 py-1 rounded-full hover:bg-green-600 transition duration-300">Approve</button>
-                    <button onClick={() => updateRequestStatus(request.id, 'Rejected')} className="bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 transition duration-300 ml-2">Reject</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      <div>
-        <h2 className="text-3xl mb-6 text-pink-600">Pet Management Panel</h2>
-        <div className="bg-white p-6 rounded-lg shadow-lg mb-10">
-          <form onSubmit={handleAddPet} className="mb-6">
-            <div className="grid grid-cols-2 gap-6">
-              <input
-                type="text"
-                placeholder="Pet Name"
-                value={newPet.name}
-                onChange={(e) => setNewPet({ ...newPet, name: e.target.value })}
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-              />
-              <input
-                type="number"
-                placeholder="Age"
-                value={newPet.age}
-                onChange={(e) => setNewPet({ ...newPet, age: Number(e.target.value) })}
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-              />
-              <input
-                type="text"
-                placeholder="Breed"
-                value={newPet.breed}
-                onChange={(e) => setNewPet({ ...newPet, breed: e.target.value })}
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-              />
-              <input
-                type="text"
-                placeholder="Description"
-                value={newPet.description}
-                onChange={(e) => setNewPet({ ...newPet, description: e.target.value })}
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-              />
-              <input
-                type="text"
-                placeholder="Image URL"
-                value={newPet.imageUrl}
-                onChange={(e) => setNewPet({ ...newPet, imageUrl: e.target.value })}
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-              />
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={newPet.availability}
-                  onChange={(e) => setNewPet({ ...newPet, availability: e.target.checked })}
-                  className="mr-2"
-                />
-                Available
-              </label>
-            </div>
-            <button type="submit" className="mt-6 bg-pink-700 text-white p-3 rounded-lg hover:bg-pink-800 transition duration-300">Add Pet</button>
-          </form>
+      <div className="panel-title">Pet Management Panel</div>
+      <div className="bg-white p-6 rounded-lg shadow-lg">
+        <form onSubmit={handleAddPet} className="add-pet-form">
+          <input
+            type="text"
+            placeholder="Pet Name"
+            value={newPet.name}
+            onChange={(e) => setNewPet({ ...newPet, name: e.target.value })}
+          />
+          <input
+            type="number"
+            placeholder="Age"
+            value={newPet.age}
+            onChange={(e) => setNewPet({ ...newPet, age: Number(e.target.value) })}
+          />
+          <input
+            type="text"
+            placeholder="Breed"
+            value={newPet.breed}
+            onChange={(e) => setNewPet({ ...newPet, breed: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Description"
+            value={newPet.description}
+            onChange={(e) => setNewPet({ ...newPet, description: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={newPet.imageUrl}
+            onChange={(e) => setNewPet({ ...newPet, imageUrl: e.target.value })}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={newPet.availability}
+              onChange={(e) => setNewPet({ ...newPet, availability: e.target.checked })}
+            />
+            Available
+          </label>
+          <button type="submit">Add Pet</button>
+        </form>
 
-          <table className="min-w-full">
-            <thead>
-              <tr className="bg-pink-100">
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Name</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Age</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Breed</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Description</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Image</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Availability</th>
-                <th className="px-6 py-3 text-left text-pink-600 font-semibold">Actions</th>
+        <table className="pet-table">
+          <thead>
+            <tr>
+              <th>Pet Name</th>
+              <th>Age</th>
+              <th>Breed</th>
+              <th>Availability</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pets.map((pet) => (
+              <tr key={pet.id}>
+                <td>
+                  <img src={pet.imageUrl} alt={pet.name} />
+                  {pet.name}
+                </td>
+                <td>{pet.age}</td>
+                <td>{pet.breed}</td>
+                <td>{pet.availability ? 'Yes' : 'No'}</td>
+                <td>
+                  <button onClick={() => handleDeletePet(pet.id)} className="button button-reject">
+                    Delete
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {pets.map((pet) => (
-                <tr key={pet.id} className="hover:bg-pink-50">
-                  <td className="border-t px-6 py-4">{pet.name}</td>
-                  <td className="border-t px-6 py-4">{pet.age}</td>
-                  <td className="border-t px-6 py-4">{pet.breed}</td>
-                  <td className="border-t px-6 py-4">{pet.description}</td>
-                  <td className="border-t px-6 py-4"><img src={pet.imageUrl} alt={pet.name} className="h-12 w-12 object-cover rounded-full" /></td>
-                  <td className="border-t px-6 py-4">{pet.availability ? 'Yes' : 'No'}</td>
-                  <td className="border-t px-6 py-4">
-                    <button onClick={() => handleDeletePet(pet.id)} className="bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 transition duration-300">Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

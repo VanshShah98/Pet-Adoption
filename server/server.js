@@ -3,6 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const { auth } = require('./middleware/auth');
+// // server.js
+// const adminRoutes = require('./routes/auth/admin');
+
+// // Other routes
+// app.use('/api/auth/admin', adminRoutes);
 
 // Initialize express app
 const app = express();
