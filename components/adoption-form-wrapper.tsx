@@ -5,9 +5,12 @@ import { AdoptionForm } from "./adoption-form"
 
 export function AdoptionFormWrapper() {
   const searchParams = useSearchParams()
+
+  // Fetch petId and petName from search params
   const petId = searchParams?.get('petId') ?? null
   const petName = searchParams?.get('petName') ?? null
 
+  // If petId or petName are missing, show an error message
   if (!petId || !petName) {
     return (
       <div className="text-center">
@@ -19,5 +22,6 @@ export function AdoptionFormWrapper() {
     )
   }
 
+  // Return the AdoptionForm component, passing petId and petName as props
   return <AdoptionForm petId={petId} petName={petName} />
-} 
+}
