@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom"
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button"
 import { FeaturedPets } from "../components/featured-pets"
 import { AdoptionProcess } from "../components/adoption-process"
@@ -22,10 +23,10 @@ export default function HomePage() {
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Find Your Perfect Companion Today!</h1>
                 <p className="text-lg md:text-xl mb-8">Adopt, Don't Shop – Give a pet a loving home.</p>
                 <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white">
-                  <Link to="/pets">Browse Pets</Link>
+                  <Link href="/pets">Browse Pets</Link>
                 </Button>
                 <Button asChild size="lg" className="bg-secondary hover:bg-secondary/90 text-white ml-4">
-                  <Link to="/admin/login">Admin Login</Link>
+                  <Link href="/admin/login">Admin Login</Link>
                 </Button>
               </div>
             </div>
