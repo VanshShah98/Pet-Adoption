@@ -1,6 +1,7 @@
 import { Search, FileText, Check, Home } from "lucide-react"
 import { Button } from "../../components/ui/button"
-import { Link } from "react-router-dom"
+import Link from "next/link";
+
 
 export function AdoptionProcess() {
   return (
@@ -55,7 +56,7 @@ export function AdoptionProcess() {
 
         <div className="text-center mt-10">
           <Button asChild className="bg-primary hover:bg-primary/90 text-white">
-            <Link to="/adopt">Start Adoption Process</Link>
+            <Link href="/adopt">Start Adoption Process</Link>
           </Button>
         </div>
       </div>

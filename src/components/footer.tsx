@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom"
+import Link from "next/link"; 
+
 import { Heart, Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react"
-import { Button } from "./ui/button"
-import { Input } from "./ui/input"
+import { Button } from "../../components/ui/button"
+import { Input } from "../../components/ui/input"
 
 export function Footer() {
   return (
@@ -33,27 +34,27 @@ export function Footer() {
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/" className="text-gray-400 hover:text-white transition-colors">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/pets" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/pets" className="text-gray-400 hover:text-white transition-colors">
                   Available Pets
                 </Link>
               </li>
               <li>
-                <Link to="/adopt" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/adopt" className="text-gray-400 hover:text-white transition-colors">
                   Adoption Process
                 </Link>
               </li>
               <li>
-                <Link to="/lost-found" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/lost-found" className="text-gray-400 hover:text-white transition-colors">
                   Lost & Found
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
                   Contact Us
                 </Link>
               </li>
@@ -64,7 +65,7 @@ export function Footer() {
             <h3 className="font-bold text-lg mb-4">Resources</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/about" className="text-gray-400 hover:text-white transition-colors">
                   About Us
                 </Link>
               </li>

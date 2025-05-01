@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import Link from "next/link"; 
 import { Button } from "../../components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "../../components/ui/card"
 import { Badge } from "../../components/ui/badge"
@@ -91,7 +91,7 @@ export function FeaturedPets() {
               </CardContent>
               <CardFooter>
                 <Button asChild className="w-full">
-                  <Link to={`/pets/${pet.id}`}>Adopt Me</Link>
+                  <Link href={`/pets/${pet.id}`}>Adopt Me</Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -122,7 +122,7 @@ export function FeaturedPets() {
 
         <div className="text-center mt-10">
           <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
-            <Link to="/pets">View All Pets</Link>
+            <Link href="/pets">View All Pets</Link>
           </Button>
         </div>
       </div>

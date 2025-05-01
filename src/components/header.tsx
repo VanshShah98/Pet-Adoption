@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Heart, Search, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,7 +10,7 @@ import { Input } from "@/components/ui/input"
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
-  const location = useLocation()
+  const location = useRouter()
 
   const isActive = (path: string) => {
     return location.pathname === path
@@ -20,7 +21,7 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2">
             <div className="bg-primary rounded-full p-1.5">
               <Heart className="h-5 w-5 text-white" />
             </div>
@@ -30,39 +31,39 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link
-              to="/"
+              href="/"
               className={`text-sm font-medium transition-colors ${
                 isActive("/") ? "text-primary" : "text-gray-600 hover:text-primary"
               }`}
             >
               Home
             </Link>
-            <Link
-              to="/pets"
+<Link
+ href="/pets"
               className={`text-sm font-medium transition-colors ${
                 isActive("/pets") ? "text-primary" : "text-gray-600 hover:text-primary"
               }`}
             >
               Available Pets
             </Link>
-            <Link
-              to="/adopt"
+<Link
+ href="/adopt"
               className={`text-sm font-medium transition-colors ${
                 isActive("/adopt") ? "text-primary" : "text-gray-600 hover:text-primary"
               }`}
             >
               Adoption Process
             </Link>
-            <Link
-              to="/lost-found"
+<Link
+ href="/lost-found"
               className={`text-sm font-medium transition-colors ${
                 isActive("/lost-found") ? "text-primary" : "text-gray-600 hover:text-primary"
               }`}
             >
               Lost & Found
             </Link>
-            <Link
-              to="/contact"
+<Link
+ href="/contact"
               className={`text-sm font-medium transition-colors ${
                 isActive("/contact") ? "text-primary" : "text-gray-600 hover:text-primary"
               }`}
@@ -133,35 +134,35 @@ export function Header() {
           <div className="md:hidden py-4 border-t">
             <nav className="flex flex-col space-y-4 mb-4">
               <Link
-                to="/"
+                href="/"
                 className={`text-sm font-medium ${isActive("/") ? "text-primary" : "text-gray-600"}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
-                to="/pets"
+                href="/pets"
                 className={`text-sm font-medium ${isActive("/pets") ? "text-primary" : "text-gray-600"}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Available Pets
               </Link>
               <Link
-                to="/adopt"
+                href="/adopt"
                 className={`text-sm font-medium ${isActive("/adopt") ? "text-primary" : "text-gray-600"}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Adoption Process
               </Link>
               <Link
-                to="/lost-found"
+                href="/lost-found"
                 className={`text-sm font-medium ${isActive("/lost-found") ? "text-primary" : "text-gray-600"}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Lost & Found
               </Link>
               <Link
-                to="/contact"
+                href="/contact"
                 className={`text-sm font-medium ${isActive("/contact") ? "text-primary" : "text-gray-600"}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
