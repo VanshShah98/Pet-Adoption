@@ -1,6 +1,6 @@
-import { PetFilters } from "../components/pet-filters"
-import { PetGrid } from "../components/pet-grid"
-import { Pagination } from "../components/pagination"
+import { PetFilters } from "../../components/pet-filters"
+import { PetGrid } from "../../components/pet-grid"
+import { Pagination } from "../../components/pagination"
 
 export default function PetsPage() {
   return (
